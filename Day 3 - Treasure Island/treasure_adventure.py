@@ -24,22 +24,22 @@ print("Welcome to Treasure Island!")
 print("Find the treasure!\n")
 
 print("You wash up on shore, stranded. You find a map on the beach, it appears to be of the island your on. It has patches missing, but it has a big red X.")
-first = input("Do you want to follow the map, or try to swim out to find help?\n\tType \"map\" or \"swim\" ")
-if first.lower() == "map":
+first = input("Do you want to follow the map, or try to swim out to find help?\n\tType \"map\" or \"swim\" ").lower()
+if first == "map":
   print("Good Choice! You arrive at a missing patch of the map and see a cave in front of you. Do you go inside?")
-  second = input("\tType \"cave\" or \"stay\" ")
+  second = input("\tType \"cave\" or \"stay\" ").lower()
 
-  if second.lower() == "cave":
+  if second == "cave":
     print("Its dark in the cave, but you find a skeleton holding a lighter. Do you take it?")
-    third = input("\tType \"take\" or \"no\" ")
+    third = input("\tType \"take\" or \"no\" ").lower()
 
-    if third.lower() == "take":
+    if third == "take":
       print("You take the ligher and use it to see in the cave, unfortunately the cave was filled with natural gas and you burn to death. Game over!")
-    elif third.lower() == "no":
+    elif third == "no":
       print("You stumble through the cave, and kick something that sounds almost hollow. Do you investigate or run away?")
-      fourth = input("\tType \"investigate\" or \"run\" ")
+      fourth = input("\tType \"investigate\" or \"run\" ").lower()
 
-      if fourth.lower() == "investigate":
+      if fourth == "investigate":
         print('''
                 __________________
               .-'  \ _.-''-._ /  '-.
@@ -55,18 +55,18 @@ if first.lower() == "map":
                       '\/'
         ''')
         print("You found the treasure! You win!")
-      elif fourth.lower() == "run":
+      elif fourth == "run":
         print("You run out of the cave, but trip in the dark and suffer from internal bleeding. Game over!")
       else:
         print("Invalid move.")
     else:
       print("Invalid move.")
       
-  elif second.lower() == "stay":
+  elif second == "stay":
     print("A bear arrives and eats you. Game over!")
   else:
     print("Invalid move.")
-elif first.lower() == "swim":
+elif first == "swim":
   print("You get too tired and drown Game over!")
 else:
   print("Invalid move.")

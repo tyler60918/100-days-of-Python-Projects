@@ -50,3 +50,19 @@ elif scramble == "y":
 else:
   print("Invalid response")
 print(f"Your password is: {password}")
+
+# Hard Level / Scrambled (simpler)
+if scramble == "y":
+  passwordList = []
+  password = ""
+  for i in range(numLetters):
+    passwordList += random.choice(letters)
+  for i in range(numNumbers):
+    passwordList += random.choice(numbers)
+  for i in range(numSymbols):
+    passwordList += random.choice(symbols)
+  random.shuffle(passwordList)
+
+  for c in passwordList:
+    password += c
+  print(f"Your password is: {password}")

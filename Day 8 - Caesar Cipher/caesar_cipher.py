@@ -17,11 +17,6 @@ def caesar(direction, original_text, shift_amount):
             new_message += c
     print(f"Here's the {direction}d message: {new_message}")
 
-# TODO-2: What happens if the user enters a number/symbol/space?
-
-
-
-# TODO-3: Can you figure out a way to restart the cipher program?
 active = True
 
 while active:

@@ -30,55 +30,63 @@ resources = {
     "coffee": 100,
 }
 
+machine_on = True
+inserted_money = 0
+
 def insert_money():
+    global inserted_money
     quarters = int(input("How many quarters?: "))
     dimes = int(input("How many dimes?: "))
     nickels = int(input("How many nickels?: "))
     pennies = int(input("How many pennies?: "))
+    inserted_money = quarters * 0.25 + dimes * 0.1 + nickels * 0.05 + pennies * 0.01
 
 
-def order_cofee(drink):
+def order_coffee(drink):
     if drink == "espresso" or drink == "latte" or drink == "cappuccino":
-        if resources["water"] < MENU[drink]["ingredients"]["water"]:
+        global inserted_money
+        if resources["water"] < MENU[drink]["ingredients"].get("water", 0):
             print("Unable to make drink, insufficient water 💧")
-        elif resources["milk"] < MENU[drink]["ingredients"]["milk"]:
+        elif resources["milk"] < MENU[drink]["ingredients"].get("milk", 0):
             print("Unable to make drink, insufficient milk 🥛")
-        elif resources["coffee"] < MENU[drink]["ingredients"]["coffee"]:
+        elif resources["coffee"] < MENU[drink]["ingredients"].get("coffee", 0):
             print("Unable to make drink, insufficient coffee ☕️")
         else:
             if inserted_money < MENU[drink]["cost"]:
-                print(f"Please insert money. Current balance: {inserted_money}, required balance: {MENU[drink]["cost"]}")
-                inserted_money()
+                print(f"Please insert money. Current balance: ${inserted_money}, required balance: ${MENU[drink]["cost"]}")
+                insert_money()
+                if inserted_money < MENU[drink]["cost"]:
+                    return False
+                else:
+                    resources["water"] -= MENU[drink]["ingredients"].get("water", 0)
+                    resources["milk"] -= MENU[drink]["ingredients"].get("milk", 0)
+                    resources["coffee"] -= MENU[drink]["ingredients"].get("coffee", 0)
+                    inserted_money -= MENU[drink]["cost"]
+                    return True
+
     else:
         print("Drink is not sold here.")
 
-machine_on = True
-inserted_money = 0
-
-# TODO 1. Prompt user by asking 'what would you like?' 
 while machine_on:
+    order_success = False
     user_input = input("What would you like?: ").lower()
 
     if user_input == "off":
         machine_on = False
+        continue
     elif user_input == "report":
         print(f"Water: {resources["water"]}ml 💧")
         print(f"Milk: {resources["milk"]}ml 🥛")
         print(f"Coffee: {resources["coffee"]}g ☕️")
         print(f"Money: ${inserted_money}")
-    
-    # TODO 4. Check resources are sufficient
     elif user_input == "espresso":
-
+        order_success = order_coffee("espresso")
     elif user_input == "latte":
-
+        order_success = order_coffee("latte")
     elif user_input == "cappuccino":
+        order_success = order_coffee("cappuccino")
 
-
-    # TODO 5. Process coins
-
-
-    # TODO 6. Check transaction successful
-
-
-    # TODO 7. Make Coffee
+    if order_success:
+        print(f"{user_input} purchased! ${round(inserted_money, 2)} refunded.")
+    else:
+        print("Insufficient funds.")
